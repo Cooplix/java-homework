@@ -33,4 +33,11 @@ class AcademyCoinTest {
 				"There is no profit to be made, so return zero");
 	}
 
+	@Test
+	@DisplayName("No profit")
+	void AcademyCoin_MyTest() {
+		assertEquals(2, AcademyCoin.maxProfit(Arrays.stream(new int[] { 5,2,4}).boxed()),
+				"There is no profit to be made, so return zero");
+	}
+
 }
