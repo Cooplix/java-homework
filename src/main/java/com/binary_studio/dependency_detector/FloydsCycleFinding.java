@@ -1,49 +1,52 @@
 package com.binary_studio.dependency_detector;
 
 public class FloydsCycleFinding {
-    //Simple implication of Floyd's Cycle Finding
-    //in LinkedList
-    //code is taken from my solutions from the subject Algorithms and Data Structures
-    //Based on pseudocode from the lectures
-    //rewrite with C++ to Java
 
-    Node head;
+	// Simple implication of Floyd's Cycle Finding
+	// in LinkedList
+	// code is taken from my solutions from the subject Algorithms and Data Structures
+	// Based on pseudocode from the lectures
+	// rewrite with C++ to Java
 
-    class Node {
-        String data;
-        Node next;
-        Node(String d){
-            data = d;
-            next = null;
-        }
-    }
+	private static Node head;
 
-    public void push(String newData) {
-        Node newNode = new Node(newData);
+	static class Node {
 
-        newNode.next = head;
-        head = newNode;
-    }
+		String data;
 
-    public boolean detectLoop() {
-        Node slow = head;
-        Node fast = head;
-        int flag = 0;
+		Node next;
 
-        while (slow != null && fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+		Node(String d) {
+			data = d;
+			next = null;
+		}
 
-            if(slow == fast) {
-                flag = 1;
-                break;
-            }
-        }
+	}
 
-        if(flag != 1) {
-            return true; //if loop not found return true
-        }
-        return false; //detect loop
-    }
+	public void push(String newData) {
+		Node newNode = new Node(newData);
+		//TODO Fix bugs with create a cyclic
+		newNode.next = head;
+		head = newNode;
+	}
+
+	public boolean detectLoop() {
+		Node slow = head;
+		Node fast = head;
+		int flag = 0;
+
+		while (slow != null && fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+
+			if (slow == fast) {
+				flag = 1;
+				break;
+			}
+		}
+
+		return flag != 1;
+
+	}
 
 }
