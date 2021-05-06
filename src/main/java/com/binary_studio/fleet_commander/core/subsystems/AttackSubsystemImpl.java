@@ -34,7 +34,7 @@ public final class AttackSubsystemImpl implements AttackSubsystem {
 	@Override
 	public String getName() {
 		// TODO: Ваш код здесь :)
-		return null;
+		return "null";
 	}
 
 }
