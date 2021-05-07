@@ -14,48 +14,54 @@ class Graph {
 
 	private final List<List<Integer>> adj;
 
-	public Graph(int V) {
+	Graph(int V) {
 		this.V = V;
-		adj = new ArrayList<>(V);
+		this.adj = new ArrayList<>(V);
 
-		for (int i = 0; i < V; i++)
-			adj.add(new LinkedList<>());
+		for (int i = 0; i < V; i++) {
+			this.adj.add(new LinkedList<>());
+		}
 	}
 
 	private boolean isCyclicUtil(int i, boolean[] visited, boolean[] recStack) {
-		if (recStack[i])
+		if (recStack[i]) {
 			return true;
+		}
 
-		if (visited[i])
+		if (visited[i]) {
 			return false;
+		}
 
 		visited[i] = true;
 
 		recStack[i] = true;
-		List<Integer> children = adj.get(i);
+		List<Integer> children = this.adj.get(i);
 
-		for (Integer c : children)
-			if (isCyclicUtil(c, visited, recStack))
+		for (Integer c : children) {
+			if (isCyclicUtil(c, visited, recStack)) {
 				return true;
-
+			}
+		}
 		recStack[i] = false;
 
 		return false;
 	}
 
 	public void addEdge(int source, int dest) {
-		adj.get(source).add(dest);
+		this.adj.get(source).add(dest);
 	}
 
 	public boolean isCyclic() {
-		boolean[] visited = new boolean[V];
-		boolean[] recStack = new boolean[V];
+		boolean[] visited = new boolean[this.V];
+		boolean[] recStack = new boolean[this.V];
 
 		//If you need standard DFS, change return to the opposite
 
-		for (int i = 0; i < V; i++)
-			if (isCyclicUtil(i, visited, recStack))
+		for (int i = 0; i < this.V; i++) {
+			if (isCyclicUtil(i, visited, recStack)) {
 				return false;
+			}
+		}
 
 		return true;
 	}
