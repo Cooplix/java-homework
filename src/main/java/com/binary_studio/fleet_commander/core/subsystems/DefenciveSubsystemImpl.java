@@ -13,8 +13,7 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 	private PositiveInteger shieldRegeneration;
 	private PositiveInteger hullRegeneration;
 
-	public DefenciveSubsystemImpl(String name, PositiveInteger powerGridConsumption, PositiveInteger capacitorConsumption,
-								  PositiveInteger impactReductionPercent, PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) {
+	public DefenciveSubsystemImpl(String name, PositiveInteger powerGridConsumption, PositiveInteger capacitorConsumption, PositiveInteger impactReductionPercent, PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) {
 		this.name = name;
 		this.powerGridConsumption = powerGridConsumption;
 		this.capacitorConsumption = capacitorConsumption;
@@ -23,10 +22,7 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 		this.hullRegeneration = hullRegeneration;
 	}
 
-	public static DefenciveSubsystemImpl construct(String name, PositiveInteger powerGridConsumption,
-												   PositiveInteger capacitorConsumption, PositiveInteger impactReductionPercent,
-												   PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) throws IllegalArgumentException {
-
+	public static DefenciveSubsystemImpl construct(String name, PositiveInteger powerGridConsumption, PositiveInteger capacitorConsumption, PositiveInteger impactReductionPercent, PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) throws IllegalArgumentException {
 		if (name == null || "".equals(name.trim())) {
 			throw new IllegalArgumentException("Name should be not null and not empty");
 		}
