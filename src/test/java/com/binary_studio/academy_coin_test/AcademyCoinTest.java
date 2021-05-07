@@ -3,7 +3,6 @@ package com.binary_studio.academy_coin_test;
 import com.binary_studio.academy_coin.AcademyCoin;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
