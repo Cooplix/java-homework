@@ -5,21 +5,16 @@ import com.binary_studio.fleet_commander.core.common.PositiveInteger;
 import com.binary_studio.fleet_commander.core.subsystems.contract.AttackSubsystem;
 
 public final class AttackSubsystemImpl implements AttackSubsystem {
-
 	private String name;
-
 	private PositiveInteger powerGridRequirments;
-
 	private PositiveInteger capacitorConsumption;
-
 	private PositiveInteger optimalSpeed;
-
 	private PositiveInteger optimalSize;
-
 	private PositiveInteger baseDamage;
 
-	public AttackSubsystemImpl(String name, PositiveInteger powerGridRequirments, PositiveInteger capacitorConsumption,
-			PositiveInteger optimalSpeed, PositiveInteger optimalSize, PositiveInteger baseDamage) {
+
+
+	public AttackSubsystemImpl(String name, PositiveInteger powerGridRequirments, PositiveInteger capacitorConsumption, PositiveInteger optimalSpeed, PositiveInteger optimalSize, PositiveInteger baseDamage) {
 		this.name = name;
 		this.powerGridRequirments = powerGridRequirments;
 		this.capacitorConsumption = capacitorConsumption;
@@ -27,17 +22,15 @@ public final class AttackSubsystemImpl implements AttackSubsystem {
 		this.optimalSize = optimalSize;
 		this.baseDamage = baseDamage;
 
+
 	}
 
-	public static AttackSubsystemImpl construct(String name, PositiveInteger powergridRequirments,
-			PositiveInteger capacitorConsumption, PositiveInteger optimalSpeed, PositiveInteger optimalSize,
-			PositiveInteger baseDamage) throws IllegalArgumentException {
+	public static AttackSubsystemImpl construct(String name, PositiveInteger powergridRequirments, PositiveInteger capacitorConsumption, PositiveInteger optimalSpeed, PositiveInteger optimalSize, PositiveInteger baseDamage) throws IllegalArgumentException {
 		if (name == null || "".equals(name.trim())) {
 			throw new IllegalArgumentException("Name should be not null and not empty");
 		}
 
-		return new AttackSubsystemImpl(name, powergridRequirments, capacitorConsumption, optimalSpeed, optimalSize,
-				baseDamage);
+		return new AttackSubsystemImpl(name, powergridRequirments, capacitorConsumption, optimalSpeed, optimalSize, baseDamage);
 	}
 
 	@Override
@@ -52,18 +45,15 @@ public final class AttackSubsystemImpl implements AttackSubsystem {
 
 	@Override
 	public PositiveInteger attack(Attackable target) {
-		double sizeReductionModifier = target.getSize().value() >= this.optimalSize.value() ? 1
-				: (double) target.getSize().value() / this.optimalSize.value();
-		double speedReductionModifier = target.getCurrentSpeed().value() <= this.optimalSpeed.value() ? 1
-				: (double) optimalSpeed.value() / (2 * target.getCurrentSpeed().value());
-		int damage = (int) Math
-				.round(this.baseDamage.value() * Math.min(sizeReductionModifier, speedReductionModifier));
+		double sizeReductionModifier =  target.getSize().value() >= this.optimalSize.value() ? 1 : (double) target.getSize().value() / this.optimalSize.value();
+		double speedReductionModifier =  target.getCurrentSpeed().value() <= this.optimalSpeed.value() ? 1 : (double) this.optimalSpeed.value() / (2 * target.getCurrentSpeed().value());
+		int damage = (int) Math.round(this.baseDamage.value() * Math.min(sizeReductionModifier, speedReductionModifier));
 		return PositiveInteger.of(damage);
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 }
