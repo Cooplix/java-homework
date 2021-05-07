@@ -6,42 +6,59 @@ import com.binary_studio.fleet_commander.core.common.PositiveInteger;
 import com.binary_studio.fleet_commander.core.subsystems.contract.DefenciveSubsystem;
 
 public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
+	private String name;
+	private PositiveInteger powerGridConsumption;
+	private PositiveInteger capacitorConsumption;
+	private PositiveInteger impactReductionPercent;
+	private PositiveInteger shieldRegeneration;
+	private PositiveInteger hullRegeneration;
 
-	public static DefenciveSubsystemImpl construct(String name, PositiveInteger powergridConsumption,
-			PositiveInteger capacitorConsumption, PositiveInteger impactReductionPercent,
-			PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) throws IllegalArgumentException {
-		// TODO: Ваш код здесь :)
-		return null;
+	public DefenciveSubsystemImpl(String name, PositiveInteger powerGridConsumption, PositiveInteger capacitorConsumption,
+								  PositiveInteger impactReductionPercent, PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) {
+		this.name = name;
+		this.powerGridConsumption = powerGridConsumption;
+		this.capacitorConsumption = capacitorConsumption;
+		this.impactReductionPercent = impactReductionPercent;
+		this.shieldRegeneration = shieldRegeneration;
+		this.hullRegeneration = hullRegeneration;
+	}
+
+	public static DefenciveSubsystemImpl construct(String name, PositiveInteger powerGridConsumption,
+												   PositiveInteger capacitorConsumption, PositiveInteger impactReductionPercent,
+												   PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) throws IllegalArgumentException {
+
+		if (name == null || "".equals(name.trim())) {
+			throw new IllegalArgumentException("Name should be not null and not empty");
+		}
+
+		return new DefenciveSubsystemImpl(name, powerGridConsumption, capacitorConsumption, impactReductionPercent, shieldRegeneration, hullRegeneration);
 	}
 
 	@Override
 	public PositiveInteger getPowerGridConsumption() {
-		// TODO: Ваш код здесь :)
-		return null;
+		return this.powerGridConsumption;
 	}
 
 	@Override
 	public PositiveInteger getCapacitorConsumption() {
-		// TODO: Ваш код здесь :)
-		return null;
+		return this.capacitorConsumption;
 	}
 
 	@Override
 	public String getName() {
-		// TODO: Ваш код здесь :)
-		return null;
+		return this.name;
 	}
 
 	@Override
 	public AttackAction reduceDamage(AttackAction incomingDamage) {
 		// TODO: Ваш код здесь :)
+		//I dont know  ¯\_(ツ)_/¯
 		return null;
 	}
 
 	@Override
 	public RegenerateAction regenerate() {
-		// TODO: Ваш код здесь :)
-		return null;
+		return new RegenerateAction(this.shieldRegeneration, this.hullRegeneration);
 	}
 
 }
