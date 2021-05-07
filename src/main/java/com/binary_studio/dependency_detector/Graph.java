@@ -5,10 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 class Graph {
-	//This code I taken of lectures of Algorithm and Data Structs, sorry ¯\_(ツ)_/¯
-	//The first attempt was from writing Floyd's Cycle detection,
-	//but it didn't pass all the tests.
-	//DFS performed better in this case.
+
+	// This code I taken of lectures of Algorithm and Data Structs, sorry ¯\_(ツ)_/¯
+	// The first attempt was from writing Floyd's Cycle detection,
+	// but it didn't pass all the tests.
+	// DFS performed better in this case.
 
 	private final int V;
 
@@ -51,7 +52,7 @@ class Graph {
 		boolean[] visited = new boolean[V];
 		boolean[] recStack = new boolean[V];
 
-		//If you need standard DFS, change return to the opposite
+		// If you need standard DFS, change return to the opposite
 
 		for (int i = 0; i < V; i++)
 			if (isCyclicUtil(i, visited, recStack))

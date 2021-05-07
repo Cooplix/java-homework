@@ -7,17 +7,19 @@ public final class DependencyDetector {
 	private DependencyDetector() {
 	}
 
-	private static void stringToEdge(DependencyList libraries, Graph graph) { //build graph edge
+	private static void stringToEdge(DependencyList libraries, Graph graph) { // build
+																				// graph
+																				// edge
 		List<String> librariesList = new ArrayList<>(libraries.libraries);
 
 		List<String> librariesDependencies = new ArrayList<>();
-
 
 		for (String[] str : libraries.dependencies) {
 			librariesDependencies.addAll(Arrays.asList(str));
 		}
 
-		//This is not the optimal way to get the index, but my knowledge is not enough to improve
+		// This is not the optimal way to get the index, but my knowledge is not enough to
+		// improve
 		for (int i = 0; i < librariesDependencies.size() - 1; i += 2) {
 			int x;
 			for (int j = 0; j < librariesList.size(); j++) {
@@ -42,4 +44,5 @@ public final class DependencyDetector {
 		return graph.isCyclic();
 
 	}
+
 }
