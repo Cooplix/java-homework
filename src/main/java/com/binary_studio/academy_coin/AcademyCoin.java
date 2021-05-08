@@ -23,4 +23,5 @@ public final class AcademyCoin {
 		}
 		return maxProfit;
 	}
+
 }
