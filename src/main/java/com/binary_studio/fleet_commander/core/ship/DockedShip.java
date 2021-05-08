@@ -110,7 +110,8 @@ public final class DockedShip implements ModularVessel {
 			throw NotAllSubsystemsFitted.defenciveMissing();
 		}
 		else {
-			return new CombatReadyShip(name, shieldHP, hullHP, powergridOutput, capacitorAmount, capacitorRechargeRate, speed, size);
+			return new CombatReadyShip(name, shieldHP, hullHP, powergridOutput, capacitorAmount, capacitorRechargeRate,
+					speed, size);
 		}
 	}
 
