@@ -58,9 +58,9 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 
 	@Override
 	public AttackAction reduceDamage(AttackAction incomingDamage) {
-		// TODO: Ваш код здесь :)
-		// I dont know ¯\_(ツ)_/¯
-		return null;
+		int reduceDamege = (int) Math.ceil(impactReductionPercent.value() <= 95 ? (1 - impactReductionPercent.value() * 0.01) * incomingDamage.damage.value() :
+				0.05 * incomingDamage.damage.value());
+		return new AttackAction(PositiveInteger.of(reduceDamege) , incomingDamage.attacker, incomingDamage.target, incomingDamage.weapon);
 	}
 
 	@Override
