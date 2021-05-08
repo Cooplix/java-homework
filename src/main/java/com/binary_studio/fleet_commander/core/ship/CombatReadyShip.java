@@ -1,13 +1,13 @@
 package com.binary_studio.fleet_commander.core.ship;
 
+import java.util.Optional;
+
 import com.binary_studio.fleet_commander.core.actions.attack.AttackAction;
 import com.binary_studio.fleet_commander.core.actions.defence.AttackResult;
 import com.binary_studio.fleet_commander.core.actions.defence.RegenerateAction;
 import com.binary_studio.fleet_commander.core.common.Attackable;
 import com.binary_studio.fleet_commander.core.common.PositiveInteger;
 import com.binary_studio.fleet_commander.core.ship.contract.CombatReadyVessel;
-
-import java.util.Optional;
 
 public final class CombatReadyShip implements CombatReadyVessel {
 
@@ -52,17 +52,17 @@ public final class CombatReadyShip implements CombatReadyVessel {
 
 	@Override
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	@Override
 	public PositiveInteger getSize() {
-		return size;
+		return this.size;
 	}
 
 	@Override
 	public PositiveInteger getCurrentSpeed() {
-		return currentSpeed;
+		return this.currentSpeed;
 	}
 
 	@Override

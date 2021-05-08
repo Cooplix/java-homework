@@ -1,5 +1,7 @@
 package com.binary_studio.fleet_commander_test;
 
+import java.util.Optional;
+
 import com.binary_studio.fleet_commander.core.actions.attack.AttackAction;
 import com.binary_studio.fleet_commander.core.actions.defence.AttackResult;
 import com.binary_studio.fleet_commander.core.actions.defence.RegenerateAction;
@@ -15,8 +17,6 @@ import com.binary_studio.fleet_commander.core.subsystems.DefenciveSubsystemBuild
 import com.binary_studio.fleet_commander.core.subsystems.DefenciveSubsystemImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
