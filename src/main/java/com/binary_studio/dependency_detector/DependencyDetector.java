@@ -17,21 +17,14 @@ public final class DependencyDetector {
 			librariesDependencies.addAll(Arrays.asList(str));
 		}
 
-		//This is not the optimal way to get the index, but my knowledge is not enough to improve
-		for (int i = 0; i < librariesDependencies.size() - 1; i += 2) {
-			int x;
-			for (int j = 0; j < librariesList.size(); j++) {
-				int y;
-				if (librariesDependencies.get(i).equals(librariesList.get(j))) {
-					x = librariesList.indexOf(librariesList.get(j));
-					for (int z = 0; z < librariesList.size(); z++) {
-						if (librariesDependencies.get(i + 1).equals(librariesList.get(z))) {
-							y = librariesList.indexOf(librariesList.get(z));
-							graph.addEdge(x, y);
-						}
-					}
-				}
-			}
+
+		//improved performance, thanks to my solution from Algorithms and Data Struct
+		//finding perfect numbers
+		//https://github.com/Cooplix/ASD/blob/master/Liczba%20doskonala%20v2/main.cpp
+		for (int k = 0; k < librariesDependencies.size() / 2; k++) {
+			graph.addEdge(
+					librariesList.indexOf(librariesDependencies.get(2 * k)),
+					librariesList.indexOf(librariesDependencies.get(2 * k + 1)));
 		}
 	}
 
