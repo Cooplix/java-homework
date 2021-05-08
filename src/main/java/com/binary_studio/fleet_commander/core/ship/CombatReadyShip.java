@@ -60,6 +60,7 @@ public final class CombatReadyShip implements CombatReadyVessel {
 		this.powerGridOutput = powerGridOutput;
 		this.capacitorAmountMax = capacitorAmount;
 		this.currentCapacitorAmount = capacitorAmount;
+		this.capacitorRechargeRate = capacitorRechargeRate;
 		this.speed = speed;
 		this.size = size;
 		this.attackSubsystem = attackSubsystem;
@@ -68,9 +69,9 @@ public final class CombatReadyShip implements CombatReadyVessel {
 
 	@Override
 	public void endTurn() {
-		var re = this.capacitorRechargeRate.value() + this.currentCapacitorAmount.value();
-		var ck = Math.min(re, this.capacitorAmountMax.value());
-		this.currentCapacitorAmount = PositiveInteger.of(ck);
+		var rechargedCapacitor = this.capacitorRechargeRate.value() + this.currentCapacitorAmount.value();
+		int checkedCapacitor = Math.min(rechargedCapacitor, this.capacitorAmountMax.value());
+		this.currentCapacitorAmount = PositiveInteger.of(checkedCapacitor);
 
 	}
 
