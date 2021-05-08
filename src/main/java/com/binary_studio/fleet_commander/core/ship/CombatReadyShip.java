@@ -8,6 +8,7 @@ import com.binary_studio.fleet_commander.core.actions.defence.RegenerateAction;
 import com.binary_studio.fleet_commander.core.common.Attackable;
 import com.binary_studio.fleet_commander.core.common.PositiveInteger;
 import com.binary_studio.fleet_commander.core.ship.contract.CombatReadyVessel;
+import com.binary_studio.fleet_commander.core.subsystems.contract.AttackSubsystem;
 
 public final class CombatReadyShip implements CombatReadyVessel {
 
@@ -26,6 +27,8 @@ public final class CombatReadyShip implements CombatReadyVessel {
 	private PositiveInteger currentSpeed;
 
 	private PositiveInteger size;
+
+	private AttackSubsystem attackSubsystem;
 
 	public CombatReadyShip(String name, PositiveInteger shieldHP, PositiveInteger hullHP, PositiveInteger capacitor,
 			PositiveInteger capacitorRegeneration, PositiveInteger pg, PositiveInteger currentSpeed,
@@ -67,7 +70,11 @@ public final class CombatReadyShip implements CombatReadyVessel {
 
 	@Override
 	public Optional<AttackAction> attack(Attackable target) {
-		// TODO: Ваш код здесь :)
+		if (capacitor.value() < attackSubsystem.getCapacitorConsumption().value()) {
+			return Optional.empty();
+		}
+
+
 		return null;
 	}
 
