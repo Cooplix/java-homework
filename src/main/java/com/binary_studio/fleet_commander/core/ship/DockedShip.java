@@ -101,15 +101,13 @@ public final class DockedShip implements ModularVessel {
 
 	public CombatReadyShip undock() throws NotAllSubsystemsFitted {
 		if (this.attackSubsystem == null) {
+			if (this.defenciveSubsystem == null) {
+				throw NotAllSubsystemsFitted.bothMissing();
+			}
 			throw NotAllSubsystemsFitted.attackMissing();
 		}
 		else if (this.defenciveSubsystem == null) {
-			if (this.attackSubsystem == null) {
-				throw NotAllSubsystemsFitted.bothMissing();
-			}
-			else {
-				throw NotAllSubsystemsFitted.defenciveMissing();
-			}
+			throw NotAllSubsystemsFitted.defenciveMissing();
 		}
 		else {
 			return new CombatReadyShip();
