@@ -5,6 +5,9 @@ import java.util.stream.Stream;
 
 public final class AcademyCoin {
 
+	// Resources used in the whole project:
+	// my university lectures, stackoverflow, youtube
+
 	private AcademyCoin() {
 	}
 
