@@ -18,7 +18,7 @@ public final class AttackSubsystemImpl implements AttackSubsystem {
 
 	private PositiveInteger baseDamage;
 
-	public AttackSubsystemImpl(String name, PositiveInteger powerGridRequirments, PositiveInteger capacitorConsumption,
+	private AttackSubsystemImpl(String name, PositiveInteger powerGridRequirments, PositiveInteger capacitorConsumption,
 			PositiveInteger optimalSpeed, PositiveInteger optimalSize, PositiveInteger baseDamage) {
 		this.name = name;
 		this.powerGridRequirments = powerGridRequirments;

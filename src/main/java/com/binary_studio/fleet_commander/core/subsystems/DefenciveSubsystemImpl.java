@@ -19,7 +19,11 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 
 	private PositiveInteger hullRegeneration;
 
-	public DefenciveSubsystemImpl(String name, PositiveInteger powerGridConsumption,
+	private final PositiveInteger maxShieldRegeneration;
+
+	private final PositiveInteger maxHullRegeneration;
+
+	private DefenciveSubsystemImpl(String name, PositiveInteger powerGridConsumption,
 			PositiveInteger capacitorConsumption, PositiveInteger impactReductionPercent,
 			PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) {
 		this.name = name;
@@ -28,6 +32,8 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 		this.impactReductionPercent = impactReductionPercent;
 		this.shieldRegeneration = shieldRegeneration;
 		this.hullRegeneration = hullRegeneration;
+		this.maxShieldRegeneration = shieldRegeneration;
+		this.maxHullRegeneration = hullRegeneration;
 	}
 
 	public static DefenciveSubsystemImpl construct(String name, PositiveInteger powerGridConsumption,
@@ -57,10 +63,32 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 	}
 
 	@Override
+	public PositiveInteger getMaxShieldRegeneration() {
+		return this.maxShieldRegeneration;
+	}
+
+	@Override
+	public PositiveInteger getMaxHullRegeneration() {
+		return this.maxHullRegeneration;
+	}
+
+	@Override
+	public void setShieldRegeneration(PositiveInteger shieldRegeneration) {
+		this.shieldRegeneration = shieldRegeneration;
+	}
+
+	@Override
+	public void setHullRegeneration(PositiveInteger hullRegeneration) {
+		this.hullRegeneration = hullRegeneration;
+	}
+
+	@Override
 	public AttackAction reduceDamage(AttackAction incomingDamage) {
-		// TODO: Ваш код здесь :)
-		// I dont know ¯\_(ツ)_/¯
-		return null;
+		int reduceDamege = (int) Math.ceil(this.impactReductionPercent.value() <= 95
+				? (1 - this.impactReductionPercent.value() * 0.01) * incomingDamage.damage.value()
+				: 0.05 * incomingDamage.damage.value());
+		return new AttackAction(PositiveInteger.of(reduceDamege), incomingDamage.attacker, incomingDamage.target,
+				incomingDamage.weapon);
 	}
 
 	@Override
