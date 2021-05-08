@@ -134,49 +134,41 @@ public final class CombatReadyShip implements CombatReadyVessel {
 
 	@Override
 	public Optional<RegenerateAction> regenerate() {
-		PositiveInteger defenseCharAmount = this.defenciveSubsystem.getCapacitorConsumption();
-
-		if (defenseCharAmount.value() <= this.currentCapacitorAmount.value()) {
-			this.currentCapacitorAmount = PositiveInteger
-					.of(this.currentCapacitorAmount.value() - defenseCharAmount.value());
-			RegenerateAction regenetareAction = this.defenciveSubsystem.regenerate();
-			RegenerateAction hullRegenerated = regenerateHull(regenetareAction);
-			RegenerateAction shieldRegenerated = regenerateShield(hullRegenerated);
-
-			return Optional.of(shieldRegenerated);
-		}
-		else {
+		if (this.currentCapacitorAmount.value() < this.defenciveSubsystem.getCapacitorConsumption().value()) {
 			return Optional.empty();
 		}
-	}
+		else {
+			PositiveInteger finalShieldRegeneration = PositiveInteger
+					.of(this.currentShieldHP.value() + this.defenciveSubsystem.getMaxShieldRegeneration().value());
+			PositiveInteger finalHullRegeneration = PositiveInteger
+					.of(this.currentHullHP.value() + this.defenciveSubsystem.getMaxHullRegeneration().value());
 
-	private RegenerateAction regenerateShield(RegenerateAction regenetareAction) {
-		var missingShieldHP = this.shieldHPMax.value() - this.currentShieldHP.value();
-		PositiveInteger availableShieldRegenHP = regenetareAction.shieldHPRegenerated;
-
-		int regeneShield = 0;
-
-		if (missingShieldHP != 0) {
-			regeneShield = (missingShieldHP > availableShieldRegenHP.value()) ? availableShieldRegenHP.value()
-					: missingShieldHP;
-
-			this.currentShieldHP = PositiveInteger.of(regeneShield);
+			if (finalShieldRegeneration.value() > this.shieldHPMax.value()) {
+				PositiveInteger shieldRegenerationDiff = PositiveInteger
+						.of(this.shieldHPMax.value() - this.currentShieldHP.value());
+				this.defenciveSubsystem.setShieldRegeneration(shieldRegenerationDiff);
+			}
+			else {
+				this.defenciveSubsystem.setShieldRegeneration(this.defenciveSubsystem.getMaxShieldRegeneration());
+			}
+			if (finalHullRegeneration.value() > this.hullHPMax.value()) {
+				PositiveInteger hullRegenerationDiff = PositiveInteger
+						.of(this.hullHPMax.value() - this.currentHullHP.value());
+				this.defenciveSubsystem.setHullRegeneration(hullRegenerationDiff);
+			}
+			else {
+				this.defenciveSubsystem.setHullRegeneration(this.defenciveSubsystem.getMaxHullRegeneration());
+			}
+			RegenerateAction regenerateAction = this.defenciveSubsystem.regenerate();
+			this.currentShieldHP = PositiveInteger
+					.of(this.currentShieldHP.value() + regenerateAction.shieldHPRegenerated.value());
+			this.currentHullHP = PositiveInteger
+					.of(this.currentHullHP.value() + regenerateAction.hullHPRegenerated.value());
+			this.currentCapacitorAmount = PositiveInteger.of(
+					this.currentCapacitorAmount.value() - this.defenciveSubsystem.getCapacitorConsumption().value());
+			return Optional.of(regenerateAction);
 		}
-		return new RegenerateAction(regenetareAction.shieldHPRegenerated, PositiveInteger.of(regeneShield));
-	}
 
-	private RegenerateAction regenerateHull(RegenerateAction regenetareAction) {
-		var missingHull = this.hullHPMax.value() - this.currentHullHP.value();
-
-		PositiveInteger availableHullRegenerate = regenetareAction.hullHPRegenerated;
-
-		int regenHull = 0;
-
-		if (missingHull != 0) {
-			regenHull = missingHull > availableHullRegenerate.value() ? availableHullRegenerate.value() : missingHull;
-			this.currentHullHP = PositiveInteger.of(regenHull);
-		}
-		return new RegenerateAction(regenetareAction.shieldHPRegenerated, PositiveInteger.of(regenHull));
 	}
 
 }
