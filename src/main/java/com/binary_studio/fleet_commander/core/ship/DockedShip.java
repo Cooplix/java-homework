@@ -23,7 +23,7 @@ public final class DockedShip implements ModularVessel {
 
 	private PositiveInteger speed;
 
-	private PositiveInteger siz;
+	private PositiveInteger size;
 
 	private AttackSubsystem attackSubsystem;
 
@@ -31,7 +31,7 @@ public final class DockedShip implements ModularVessel {
 
 	public DockedShip(String name, PositiveInteger shieldHP, PositiveInteger hullHP, PositiveInteger powergridOutput,
 			PositiveInteger capacitorAmount, PositiveInteger capacitorRechargeRate, PositiveInteger speed,
-			PositiveInteger siz) {
+			PositiveInteger size) {
 		this.name = name;
 		this.shieldHP = shieldHP;
 		this.hullHP = hullHP;
@@ -39,7 +39,7 @@ public final class DockedShip implements ModularVessel {
 		this.capacitorAmount = capacitorAmount;
 		this.capacitorRechargeRate = capacitorRechargeRate;
 		this.speed = speed;
-		this.siz = siz;
+		this.size = size;
 	}
 
 	public static DockedShip construct(String name, PositiveInteger shieldHP, PositiveInteger hullHP,
@@ -110,7 +110,7 @@ public final class DockedShip implements ModularVessel {
 			throw NotAllSubsystemsFitted.defenciveMissing();
 		}
 		else {
-			return new CombatReadyShip();
+			return new CombatReadyShip(name, shieldHP, hullHP, powergridOutput, capacitorAmount, capacitorRechargeRate, speed, size);
 		}
 	}
 
