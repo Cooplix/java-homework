@@ -29,7 +29,7 @@ public final class DockedShip implements ModularVessel {
 
 	private DefenciveSubsystem defenciveSubsystem;
 
-	public DockedShip(String name, PositiveInteger shieldHP, PositiveInteger hullHP, PositiveInteger powergridOutput,
+	private DockedShip(String name, PositiveInteger shieldHP, PositiveInteger hullHP, PositiveInteger powergridOutput,
 			PositiveInteger capacitorAmount, PositiveInteger capacitorRechargeRate, PositiveInteger speed,
 			PositiveInteger size) {
 		this.name = name;
@@ -52,51 +52,30 @@ public final class DockedShip implements ModularVessel {
 
 	@Override
 	public void fitAttackSubsystem(AttackSubsystem subsystem) throws InsufficientPowergridException {
-		if (subsystem == null) {
-			this.attackSubsystem = null;
+		var sysTotalPgConsumption = getTotalConsumption(subsystem, this.defenciveSubsystem);
+		var bothSysFitShipPgOutput = checkSysTotalPgConsumption(sysTotalPgConsumption);
+
+		if (bothSysFitShipPgOutput) {
+			this.attackSubsystem = subsystem;
 		}
 		else {
-			if (this.defenciveSubsystem == null) {
-				if (subsystem.getPowerGridConsumption().value() > this.powergridOutput.value()) {
-					int missingPowerGrid = subsystem.getPowerGridConsumption().value() - this.powergridOutput.value();
-					throw new InsufficientPowergridException(missingPowerGrid);
-				}
-			}
-			else {
-				if (subsystem.getPowerGridConsumption().value()
-						+ this.defenciveSubsystem.getCapacitorConsumption().value() > this.powergridOutput.value()) {
-					int missingPowerGrid = subsystem.getPowerGridConsumption().value()
-							+ this.defenciveSubsystem.getPowerGridConsumption().value() - this.powergridOutput.value();
-					throw new InsufficientPowergridException(missingPowerGrid);
-				}
-			}
-			this.attackSubsystem = subsystem;
+			var missingPowergrid = sysTotalPgConsumption.value() - this.powergridOutput.value();
+			throw new InsufficientPowergridException(missingPowergrid);
 		}
 	}
 
 	@Override
 	public void fitDefensiveSubsystem(DefenciveSubsystem subsystem) throws InsufficientPowergridException {
-		if (subsystem == null) {
-			this.defenciveSubsystem = null;
-		}
-		else {
-			if (this.attackSubsystem == null) {
-				if (subsystem.getPowerGridConsumption().value() > this.powergridOutput.value()) {
-					int missingPowerGrid = subsystem.getPowerGridConsumption().value() - this.powergridOutput.value();
-					throw new InsufficientPowergridException(missingPowerGrid);
-				}
-			}
-			else {
-				if (subsystem.getPowerGridConsumption().value()
-						+ this.attackSubsystem.getCapacitorConsumption().value() > this.powergridOutput.value()) {
-					int missingPowerGrid = subsystem.getPowerGridConsumption().value()
-							+ this.attackSubsystem.getPowerGridConsumption().value() - this.powergridOutput.value();
-					throw new InsufficientPowergridException(missingPowerGrid);
-				}
-			}
+		var sysTotalPgConsumption = getTotalConsumption(this.attackSubsystem, subsystem);
+		var bothSysFitShipPgOutput = checkSysTotalPgConsumption(sysTotalPgConsumption);
+
+		if (bothSysFitShipPgOutput) {
 			this.defenciveSubsystem = subsystem;
 		}
-
+		else {
+			var missingPowergrid = sysTotalPgConsumption.value() - this.powergridOutput.value();
+			throw new InsufficientPowergridException(missingPowergrid);
+		}
 	}
 
 	public CombatReadyShip undock() throws NotAllSubsystemsFitted {
@@ -104,15 +83,30 @@ public final class DockedShip implements ModularVessel {
 			if (this.defenciveSubsystem == null) {
 				throw NotAllSubsystemsFitted.bothMissing();
 			}
-			throw NotAllSubsystemsFitted.attackMissing();
+			else {
+				throw NotAllSubsystemsFitted.attackMissing();
+			}
 		}
 		else if (this.defenciveSubsystem == null) {
 			throw NotAllSubsystemsFitted.defenciveMissing();
 		}
-		else {
-			return new CombatReadyShip(this.name, this.shieldHP, this.hullHP, this.powergridOutput,
-					this.capacitorAmount, this.capacitorRechargeRate, this.speed, this.size);
-		}
+
+		return CombatReadyShip.construct(this.name, this.shieldHP, this.hullHP, this.powergridOutput,
+				this.capacitorAmount, this.capacitorRechargeRate, this.speed, this.size, this.attackSubsystem,
+				this.defenciveSubsystem);
+
+	}
+
+	private PositiveInteger getTotalConsumption(AttackSubsystem attackSubsystem,
+			DefenciveSubsystem defenciveSubsystem) {
+		int attackSysPgConsumption = (attackSubsystem == null) ? 0 : attackSubsystem.getPowerGridConsumption().value();
+		int defenciveSysPgConsumption = (defenciveSubsystem == null) ? 0
+				: defenciveSubsystem.getPowerGridConsumption().value();
+		return PositiveInteger.of(attackSysPgConsumption + defenciveSysPgConsumption);
+	}
+
+	private boolean checkSysTotalPgConsumption(PositiveInteger sysTotalPgConsumption) {
+		return sysTotalPgConsumption.value() <= this.powergridOutput.value();
 	}
 
 }

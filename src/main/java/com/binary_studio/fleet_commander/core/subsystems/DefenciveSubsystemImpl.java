@@ -19,7 +19,11 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 
 	private PositiveInteger hullRegeneration;
 
-	public DefenciveSubsystemImpl(String name, PositiveInteger powerGridConsumption,
+	private final PositiveInteger maxShieldRegeneration;
+
+	private final PositiveInteger maxHullRegeneration;
+
+	private DefenciveSubsystemImpl(String name, PositiveInteger powerGridConsumption,
 			PositiveInteger capacitorConsumption, PositiveInteger impactReductionPercent,
 			PositiveInteger shieldRegeneration, PositiveInteger hullRegeneration) {
 		this.name = name;
@@ -28,6 +32,8 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 		this.impactReductionPercent = impactReductionPercent;
 		this.shieldRegeneration = shieldRegeneration;
 		this.hullRegeneration = hullRegeneration;
+		this.maxShieldRegeneration = shieldRegeneration;
+		this.maxHullRegeneration = hullRegeneration;
 	}
 
 	public static DefenciveSubsystemImpl construct(String name, PositiveInteger powerGridConsumption,
@@ -54,6 +60,26 @@ public final class DefenciveSubsystemImpl implements DefenciveSubsystem {
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	@Override
+	public PositiveInteger getMaxShieldRegeneration() {
+		return this.maxShieldRegeneration;
+	}
+
+	@Override
+	public PositiveInteger getMaxHullRegeneration() {
+		return this.maxHullRegeneration;
+	}
+
+	@Override
+	public void setShieldRegeneration(PositiveInteger shieldRegeneration) {
+		this.shieldRegeneration = shieldRegeneration;
+	}
+
+	@Override
+	public void setHullRegeneration(PositiveInteger hullRegeneration) {
+		this.hullRegeneration = hullRegeneration;
 	}
 
 	@Override
