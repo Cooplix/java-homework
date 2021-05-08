@@ -1,7 +1,5 @@
 package com.binary_studio.fleet_commander.core.ship;
 
-import java.util.Optional;
-
 import com.binary_studio.fleet_commander.core.actions.attack.AttackAction;
 import com.binary_studio.fleet_commander.core.actions.defence.AttackResult;
 import com.binary_studio.fleet_commander.core.actions.defence.RegenerateAction;
@@ -9,7 +7,38 @@ import com.binary_studio.fleet_commander.core.common.Attackable;
 import com.binary_studio.fleet_commander.core.common.PositiveInteger;
 import com.binary_studio.fleet_commander.core.ship.contract.CombatReadyVessel;
 
+import java.util.Optional;
+
 public final class CombatReadyShip implements CombatReadyVessel {
+
+	private String name;
+
+	private PositiveInteger shieldHP;
+
+	private PositiveInteger hullHP;
+
+	private PositiveInteger capacitor;
+
+	private PositiveInteger capacitorRegeneration;
+
+	private PositiveInteger pg;
+
+	private PositiveInteger currentSpeed;
+
+	private PositiveInteger size;
+
+	public CombatReadyShip(String name, PositiveInteger shieldHP, PositiveInteger hullHP, PositiveInteger capacitor,
+			PositiveInteger capacitorRegeneration, PositiveInteger pg, PositiveInteger currentSpeed,
+			PositiveInteger size) {
+		this.name = name;
+		this.shieldHP = shieldHP;
+		this.hullHP = hullHP;
+		this.capacitor = capacitor;
+		this.capacitorRegeneration = capacitorRegeneration;
+		this.pg = pg;
+		this.currentSpeed = currentSpeed;
+		this.size = size;
+	}
 
 	@Override
 	public void endTurn() {
@@ -19,26 +48,21 @@ public final class CombatReadyShip implements CombatReadyVessel {
 
 	@Override
 	public void startTurn() {
-		// TODO: Ваш код здесь :)
-
 	}
 
 	@Override
 	public String getName() {
-		// TODO: Ваш код здесь :)
-		return null;
+		return name;
 	}
 
 	@Override
 	public PositiveInteger getSize() {
-		// TODO: Ваш код здесь :)
-		return null;
+		return size;
 	}
 
 	@Override
 	public PositiveInteger getCurrentSpeed() {
-		// TODO: Ваш код здесь :)
-		return null;
+		return currentSpeed;
 	}
 
 	@Override
