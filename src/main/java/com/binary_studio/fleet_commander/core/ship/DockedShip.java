@@ -53,58 +53,58 @@ public final class DockedShip implements ModularVessel {
 	@Override
 	public void fitAttackSubsystem(AttackSubsystem subsystem) throws InsufficientPowergridException {
 		if (subsystem == null) {
-			attackSubsystem = null;
+			this.attackSubsystem = null;
 		}
 		else {
-			if (defenciveSubsystem == null) {
-				if (subsystem.getPowerGridConsumption().value() > powergridOutput.value()) {
-					int missingPowerGrid = subsystem.getPowerGridConsumption().value() - powergridOutput.value();
+			if (this.defenciveSubsystem == null) {
+				if (subsystem.getPowerGridConsumption().value() > this.powergridOutput.value()) {
+					int missingPowerGrid = subsystem.getPowerGridConsumption().value() - this.powergridOutput.value();
 					throw new InsufficientPowergridException(missingPowerGrid);
 				}
 			}
 			else {
 				if (subsystem.getPowerGridConsumption().value()
-						+ defenciveSubsystem.getCapacitorConsumption().value() > powergridOutput.value()) {
+						+ this.defenciveSubsystem.getCapacitorConsumption().value() > this.powergridOutput.value()) {
 					int missingPowerGrid = subsystem.getPowerGridConsumption().value()
-							+ defenciveSubsystem.getPowerGridConsumption().value() - powergridOutput.value();
+							+ this.defenciveSubsystem.getPowerGridConsumption().value() - this.powergridOutput.value();
 					throw new InsufficientPowergridException(missingPowerGrid);
 				}
 			}
-			attackSubsystem = subsystem;
+			this.attackSubsystem = subsystem;
 		}
 	}
 
 	@Override
 	public void fitDefensiveSubsystem(DefenciveSubsystem subsystem) throws InsufficientPowergridException {
 		if (subsystem == null) {
-			defenciveSubsystem = null;
+			this.defenciveSubsystem = null;
 		}
 		else {
-			if (attackSubsystem == null) {
-				if (subsystem.getPowerGridConsumption().value() > powergridOutput.value()) {
-					int missingPowerGrid = subsystem.getPowerGridConsumption().value() - powergridOutput.value();
+			if (this.attackSubsystem == null) {
+				if (subsystem.getPowerGridConsumption().value() > this.powergridOutput.value()) {
+					int missingPowerGrid = subsystem.getPowerGridConsumption().value() - this.powergridOutput.value();
 					throw new InsufficientPowergridException(missingPowerGrid);
 				}
 			}
 			else {
 				if (subsystem.getPowerGridConsumption().value()
-						+ attackSubsystem.getCapacitorConsumption().value() > powergridOutput.value()) {
+						+ this.attackSubsystem.getCapacitorConsumption().value() > this.powergridOutput.value()) {
 					int missingPowerGrid = subsystem.getPowerGridConsumption().value()
-							+ attackSubsystem.getPowerGridConsumption().value() - powergridOutput.value();
+							+ this.attackSubsystem.getPowerGridConsumption().value() - this.powergridOutput.value();
 					throw new InsufficientPowergridException(missingPowerGrid);
 				}
 			}
-			defenciveSubsystem = subsystem;
+			this.defenciveSubsystem = subsystem;
 		}
 
 	}
 
 	public CombatReadyShip undock() throws NotAllSubsystemsFitted {
-		if (attackSubsystem == null) {
+		if (this.attackSubsystem == null) {
 			throw NotAllSubsystemsFitted.attackMissing();
 		}
-		else if (defenciveSubsystem == null) {
-			if (attackSubsystem == null) {
+		else if (this.defenciveSubsystem == null) {
+			if (this.attackSubsystem == null) {
 				throw NotAllSubsystemsFitted.bothMissing();
 			}
 			else {
